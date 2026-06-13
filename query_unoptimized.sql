@@ -1,3 +1,11 @@
+-- Dropping indices for demonstration and comparison purposes
+DROP INDEX IF EXISTS idx_burger_price;
+DROP INDEX IF EXISTS idx_order_quantity;
+DROP INDEX IF EXISTS idx_orders_client_id;
+DROP INDEX IF EXISTS idx_orders_burger_id;
+
+EXPLAIN ANALYZE
+-- The main query, which has subqueries
 SELECT
     sub.name,
     sub.email,
@@ -8,8 +16,7 @@ SELECT
         SELECT
             c.name as n,
             b.name as favourite,
-            sum(o.quantity) as burger_bought,
-            max(o.quantity) as aaa
+            sum(o.quantity) as burger_bought
         FROM burgers b
         JOIN orders o on b.id = o.burger_id
         JOIN clients c on o.client_id = c.id
